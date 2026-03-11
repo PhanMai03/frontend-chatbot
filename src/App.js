@@ -1,10 +1,13 @@
 import { useState } from "react";
 import "./App.css";
+import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
 import ChatArea from "./components/ChatArea";
 import MessageInput from "./components/MessageInput";
 
 function App() {
+  const [sidebarOpen, setSidebarOpen] = useState(true);
+
   const [messages, setMessages] = useState([
     {
       id: 1,
@@ -13,6 +16,7 @@ function App() {
       timestamp: new Date(),
     },
   ]);
+
   const [conversations, setConversations] = useState([
     { id: 1, title: "New Conversation", active: true },
   ]);
@@ -25,9 +29,8 @@ function App() {
       timestamp: new Date(),
     };
 
-    setMessages([...messages, userMessage]);
+    setMessages((prev) => [...prev, userMessage]);
 
-    // Simulate bot response
     setTimeout(() => {
       const botMessage = {
         id: messages.length + 2,
@@ -35,6 +38,7 @@ function App() {
         sender: "bot",
         timestamp: new Date(),
       };
+
       setMessages((prev) => [...prev, botMessage]);
     }, 1000);
   };
@@ -45,33 +49,54 @@ function App() {
       title: `Conversation ${conversations.length + 1}`,
       active: false,
     };
-    setConversations([...conversations, newConv]);
+
+    setConversations((prev) => [...prev, newConv]);
     setMessages([]);
   };
 
   return (
     <div className="flex h-screen bg-[#F9F9F9] text-black">
-      <Sidebar
-        conversations={conversations}
-        onNewConversation={handleNewConversation}
-      />
+
+      {sidebarOpen && (
+        <Sidebar
+          conversations={conversations}
+          onNewConversation={handleNewConversation}
+          onCloseSidebar={() => setSidebarOpen(false)}
+        />
+      )}
+
       <div className="flex flex-col flex-1">
+
+        {/* {!sidebarOpen && (
+          <button
+            onClick={() => setSidebarOpen(true)}
+            className="p-3 text-xl"
+          >
+            ☰
+          </button>
+        )} */}
+
         {messages.length === 0 ? (
-          // Centered layout when no messages
           <div className="flex-1 flex flex-col items-center justify-center px-4">
+
             <div className="text-center mb-8">
               <h2 className="text-5xl font-bold mb-4">🤖</h2>
-              <h1 className="text-5xl font-bold mb-6">How can I help?</h1>
+              <h1 className="text-5xl font-bold mb-6">
+                How can I help?
+              </h1>
+
               <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-                Ask me anything or start a conversation about topics that interest you.
+                Ask me anything or start a conversation about topics
+                that interest you.
               </p>
             </div>
+
             <MessageInput onSendMessage={handleSendMessage} />
           </div>
         ) : (
-          // Standard layout when messages exist
           <>
             <ChatArea messages={messages} />
+
             <div className="bg-white border-t border-[#E2E2E2] px-4 py-6 flex justify-center">
               <MessageInput onSendMessage={handleSendMessage} />
             </div>

@@ -1,6 +1,8 @@
 import React from "react";
 import { MdExpandMore } from "react-icons/md";
 import { MdMenu } from "react-icons/md";
+import { MdMoreVert } from "react-icons/md";
+import { MdShare } from "react-icons/md";
 
 function Header({ onToggleSidebar }) {
   return (
@@ -27,12 +29,26 @@ function Header({ onToggleSidebar }) {
         <MdExpandMore className="w-5 h-5" />
       </div>
 
-      {/* Right - Get Plus Button */}
-      <button className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-gray-100 transition text-sm font-medium text-blue-600">
-        <span>✨</span>
-        <span>Get Plus</span>
-        <span className="text-gray-400 hover:text-black">✕</span>
-      </button>
+      {/* Right - Buttons */}
+      <div className="flex items-center gap-2">
+        {/* Get Plus Button */}
+        <button className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-gray-100 transition text-sm font-medium text-blue-600">
+          <span>✨</span>
+          <span>Get Plus</span>
+          <span className="text-gray-400 hover:text-black cursor-pointer">✕</span>
+        </button>
+
+        {/* Share Button */}
+        <button className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-gray-100 transition text-gray-600">
+          <MdShare className="w-5 h-5" />
+          <span className="text-sm">Share</span>
+        </button>
+
+        {/* More Menu Button */}
+        <button className="p-2 hover:bg-gray-100 rounded-lg transition text-gray-600">
+          <MdMoreVert className="w-5 h-5" />
+        </button>
+      </div>
     </div>
   );
 }
