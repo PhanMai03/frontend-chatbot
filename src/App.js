@@ -1,6 +1,5 @@
 import { useState } from "react";
 import "./App.css";
-import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
 import ChatArea from "./components/ChatArea";
 import MessageInput from "./components/MessageInput";
